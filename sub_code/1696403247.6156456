@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+#define endl "\n"
+
+using namespace std;
+const int N = 2e5 + 5;
+
+int fa[N], ind[N], dep[N];
+vector<int> G[N], rG[N], mG[N];
+queue<int> q;
+
+int find(int x) {
+	return x == fa[x] ? fa[x] : fa[x] = find(fa[x]);
+}
+
+int main() {
+	int t; 
+    cin >> t;
+	while (t--)
+    {
+        int n, m;
+        cin >> n >> m;
+        while (!q.empty()) q.pop();
+        for (int i = 1; i <= n; i++)
+        {
+            G[i].clear();
+            rG[i].clear();
+            mG[i].clear();
+            fa[i] = i;
+            ind[i] = 0;
+            dep[i] = 0;
+        }
+		for (int i = 1; i <= m; i++) 
+        {
+			int u, v;
+            cin >> u >> v;
+			G[u].push_back(v);
+			rG[v].push_back(u);
+		}
+		for (int i = 1; i <= n; i++) 
+        {
+			if (!rG[i].size()) continue;
+			int v0 = rG[i][0];
+			for (auto v1 : rG[i]) 
+            {
+				int fv0 = find(v0);
+                int fv1 = find(v1);
+				fa[fv0] = fv1;
+			}
+		}
+		for (int i = 1; i <= n; i++) 
+        {
+            int fi = find(i);
+			for (auto v : G[i]) {
+                int fv = find(v);
+				mG[fi].push_back(fv);
+				ind[fv]++;
+			}
+		}
+		for (int i = 1; i <= n; i++) if (i == find(i) && !ind[i]) q.push(i);
+		dep[1] = 1;
+		while (!q.empty()) {
+			int u = q.front();
+			q.pop();
+			for (auto v : mG[u]) 
+            {
+                ind[v]--;
+				if (!ind[v]) 
+                {
+					q.push(v);
+					dep[v] = dep[u] + 1;
+				}
+			}
+		}
+		bool f = 1;
+		for (int i = 1; i <= n; i++)
+        {
+			if (i == find(i) && ind[i] > 0) {
+				f = 0;
+				break;
+			}
+        }
+		if (!f) cout << "No" << endl;
+		else 
+        {
+			cout << "Yes" << endl << "1 ";
+			for (int i = 2; i <= n; i++)
+            {
+                cout << dep[find(i)] - dep[find(rG[i][0])] << " ";
+            }
+            cout << endl;
+		}
+	}
+}

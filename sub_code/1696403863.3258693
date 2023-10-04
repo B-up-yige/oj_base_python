@@ -1,0 +1,25 @@
+#include <cstdio>
+
+int main()
+{
+    int x;
+
+    printf("******time*******\n");
+    printf("1 morning\n");
+    printf("2 afternoon\n");
+    printf("3 night\n");
+    printf("please enter:");
+
+    scanf("%d", &x);
+
+    switch (x)
+    {
+        case 1: printf("morning");break;
+        case 2: printf("afternoon");break;
+        case 3: printf("evening");break;
+    
+        default: printf("not expect enter");
+    }
+
+    getchar();
+}

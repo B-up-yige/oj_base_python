@@ -1,0 +1,3 @@
+# 除以零会导致运行时错误
+result = 10 / 0
+print(result)

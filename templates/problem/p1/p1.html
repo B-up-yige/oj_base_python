@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件上传和编程语言选择</title>
+</head>
+<body>
+    <h1>上传文件并选择编程语言</h1>
+    <form action="/problem/p1/submit" method="POST" enctype="multipart/form-data">
+        <!-- 文件上传 -->
+        <label for="file">选择文件:</label>
+        <input type="file" name="file" id="file" accept=".py, .cpp">
+        
+        <!-- 编程语言选择 -->
+        <label for="language">选择编程语言:</label>
+        <select name="language" id="language">
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="python3">Python3</option>
+        </select>
+
+        <!-- 提交按钮 -->
+        <input type="submit" value="上传并处理文件">
+    </form>
+</body>
+</html>
