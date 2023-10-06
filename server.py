@@ -1,7 +1,8 @@
-from flask import Flask, abort, request, render_template
+from flask import Flask, abort, request, render_template, url_for
 from configparser import ConfigParser
 import judge
 import time
+
 
 #初始化配置文件
 config = ConfigParser()

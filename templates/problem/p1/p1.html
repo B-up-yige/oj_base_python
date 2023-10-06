@@ -2,6 +2,12 @@
 <html>
 <head>
     <title>文件上传和编程语言选择</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/codemirror/lib/codemirror.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/codemirror/theme/monokai.css') }}">	
+	<script src="{{ url_for('static', filename = 'css/codemirror/lib/codemirror.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/codemirror/mode/clike/clike.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/codemirror/addon/selection/active-line.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/codemirror/addon/edit/matchbrackets.js') }}"></script>
 </head>
 <body>
 	<h1>在一行输入两个数a, b。输出a+b。<h1>
@@ -15,7 +21,7 @@
         <label for="file">选择文件:</label>
         <input type="file" name="file" id="file" accept=".py, .cpp">
         
-        <!-- 编程语言选择 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/codemirror/lib/codemirror.css') }}">    <!-- 编程语言选择 -->
         <label for="language">选择编程语言:</label>
         <select name="language" id="language">
             <option value="c">C</option>
@@ -40,8 +46,20 @@
             <option value="python3">Python3</option>
         </select><br><br>
 
-		<textarea cols="100" rows="40" name="code"></textarea>
+		<textarea cols="100" rows="40" name="code" id="code"></textarea>
 		<input type="submit" value="提交">
 	</form>
 </body>
+
+<script>
+	var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"),{
+		lineNumbers: true,     // 显示行数
+        indentUnit: 4,         // 缩进单位为4
+        styleActiveLine: true, // 当前行背景高亮
+        matchBrackets: true,   // 括号匹配
+        mode: 'text/x-c++src',
+        lineWrapping: true,    // 自动换行
+        theme: 'monokai',      // 使用monokai模版
+	});
+</script>
 </html>
