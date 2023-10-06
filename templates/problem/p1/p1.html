@@ -4,7 +4,12 @@
     <title>文件上传和编程语言选择</title>
 </head>
 <body>
+	<h1>在一行输入两个数a, b。输出a+b。<h1>
+	<br>
+
     <h1>上传文件并选择编程语言</h1>
+	<br>
+
     <form action="/problem/p1/submit" method="POST" enctype="multipart/form-data">
         <!-- 文件上传 -->
         <label for="file">选择文件:</label>
@@ -22,5 +27,21 @@
         <!-- 提交按钮 -->
         <input type="submit" value="上传并处理文件">
     </form>
+
+	<h1>提交代码</h1>
+	<form action="/problem/p1/submit" method="POST" enctype="multipart/form-data">
+
+		<!-- 编程语言选择 -->
+        <label for="language">选择编程语言:</label>
+        <select name="language" id="language">
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="python3">Python3</option>
+        </select><br><br>
+
+		<textarea cols="100" rows="40" name="code"></textarea>
+		<input type="submit" value="提交">
+	</form>
 </body>
 </html>

@@ -43,15 +43,18 @@ def login():
 @app.route("/problem/<PID>/submit/", methods = ["POST"])
 def submit(PID):
 	if(request.method == "POST"):
-		f = request.files["file"]
-		if(f):
-			filename = r"sub_code/"+str(time.time())
+		filename = r"sub_code/"+str(time.time())
+		
+		try:
+			f = request.files["file"]
 			f.save(filename)
+		except:
+			with open(filename, "w") as f:
+				f.write(request.form["code"])
 
-			judger = judge.Judger()
-			return judger.run_code(filename, request.form["language"], PID)
-		else:
-			return "!QAQ!"
+		judger = judge.Judger()
+		return judger.run_code(filename, request.form["language"], PID).replace("\n", "<br>")
 
 if(__name__ == "__main__"):
 	app.run(host = "0.0.0.0", port = int(config.get("Base", "port")))
+
