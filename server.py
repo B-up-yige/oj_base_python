@@ -2,6 +2,7 @@ from flask import Flask, abort, request, render_template, url_for
 from configparser import ConfigParser
 import judge
 import time
+import sys
 
 
 #初始化配置文件
@@ -10,6 +11,7 @@ config.read("config.ini", encoding = "utf-8")
 
 #初始化框架
 app = Flask(__name__)
+
 
 #静态网页访问
 @app.route("/")
@@ -24,8 +26,9 @@ def normal(path = "index.html"):
 @app.route("/problem/<PID>")
 def problem(PID):
 	try:
-		return render_template(f"/problem/{PID}/{PID}.html")
-	except:
+		with open(f"templates/problem/{PID}/{PID}.md", "r") as f:
+			return render_template(f"mode/problem.html", PID = PID, problem = f.read().replace("\n", r"\n"))
+	except :
 		abort(404)
 
 #登录接口
@@ -55,6 +58,7 @@ def submit(PID):
 
 		judger = judge.Judger()
 		return judger.run_code(filename, request.form["language"], PID).replace("\n", "<br>")
+
 
 if(__name__ == "__main__"):
 	app.run(host = "0.0.0.0", port = int(config.get("Base", "port")))

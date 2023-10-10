@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ PID }}</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/codemirror/lib/codemirror.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/codemirror/theme/monokai.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/marked/katex.min.css') }}" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+	<script src="{{ url_for('static', filename = 'css/codemirror/lib/codemirror.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/codemirror/mode/clike/clike.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/codemirror/addon/selection/active-line.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/codemirror/addon/edit/matchbrackets.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/marked/marked.umd.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'css/marked/index.umd.js') }}"></script>
+</head>
+<body>
+	
+	<div id="problem_md"></div>
+
+    <h1>上传文件并选择编程语言</h1>
+	<br>
+
+    <form action="/problem/{{ PID }}/submit" method="POST" enctype="multipart/form-data">
+        <!-- 文件上传 -->
+        <label for="file">选择文件:</label>
+        <input type="file" name="file" id="file" accept=".py, .cpp">
+        
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/codemirror/lib/codemirror.css') }}">    <!-- 编程语言选择 -->
+        <label for="language">选择编程语言:</label>
+        <select name="language" id="language">
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="python3">Python3</option>
+        </select>
+
+        <!-- 提交按钮 -->
+        <input type="submit" value="上传并处理文件">
+    </form>
+
+	<h1>提交代码</h1>
+	<form action="/problem/{{ PID }}/submit" method="POST" enctype="multipart/form-data">
+
+		<!-- 编程语言选择 -->
+        <label for="language">选择编程语言:</label>
+        <select name="language" id="language">
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="python3">Python3</option>
+        </select><br><br>
+
+		<textarea cols="100" rows="40" name="code" id="code"></textarea>
+		<input type="submit" value="提交">
+	</form>
+</body>
+
+<script>
+	var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"),{
+		lineNumbers: true,     // 显示行数
+        indentUnit: 4,         // 缩进单位为4
+        styleActiveLine: true, // 当前行背景高亮
+        matchBrackets: true,   // 括号匹配
+        mode: 'text/x-c++src',
+        lineWrapping: true,    // 自动换行
+        theme: 'monokai',      // 使用monokai模版
+	});
+
+	marked.use(markedKatex({throwOnError: false}));
+	document.getElementById("problem_md").innerHTML = marked.parse("{{ problem }}");
+</script>
+</html>

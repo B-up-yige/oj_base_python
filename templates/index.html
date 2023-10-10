@@ -17,26 +17,19 @@
     </nav>
 
     <main>
-        <section>
-            <h2>最新文章</h2>
-            <article>
-                <h3><a href="#">文章标题 1</a></h3>
-                <p>这是第一篇文章的简要描述。</p>
-            </article>
-            <article>
-                <h3><a href="#">文章标题 2</a></h3>
-                <p>这是第二篇文章的简要描述。</p>
-            </article>
-        </section>
-
-        <section>
-            <h2>关于我们</h2>
-            <p>我们是一个简单的网站，致力于分享有用的信息。</p>
-        </section>
+		输入跳转题号(p xxxxx):<input type="text" id="PID"><br>
+		<input type="submit" onclick="goto_problem()">
     </main>
 
     <footer>
         <p>&copy; 2023 我的网站</p>
     </footer>
 </body>
+
+<script>
+	function goto_problem(){
+		window.location.href = "problem/"+document.getElementById("PID").value;
+	}
+</script>
+
 </html>
